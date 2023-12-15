@@ -24,9 +24,10 @@ void HapusToDo(todo[]);
 void LihatToDo(todo[]);
 void EditToDo(todo[]);
 void CariToDo(todo[]);
-void CariToDo(todo[]);
 string TanggalWaktuSekarang();
 string ConvertToLowercase(string);
+int CalculateDayDifference(std::chrono::system_clock::time_point deadlineDateTime);
+std::chrono::system_clock::time_point ConvertToDateTime(const std::string& dateTimeString);
 
 int urut = 0;
 
@@ -143,6 +144,14 @@ void LihatToDo (todo ToDos[]){
 	cout << setw(5) << "ID" << setw(15) << "Tugas" << setw(15) << "Prioritas" << setw(15) << "Status" << setw(30) << "Deadline" << setw(30) << "Tanggal Diubah" << endl;
 	cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
 	for(int i = 1; i < urut; i++){
+
+		std::chrono::system_clock::time_point deadlineDateTime = ConvertToDateTime(ToDos[i].Deadline);
+		std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
+		std::chrono::duration<int, std::ratio<86400>> dayDifference = std::chrono::duration_cast<std::chrono::duration<int, std::ratio<86400>>>(deadlineDateTime - now);
+		int dayCount = dayDifference.count();
+
+		cout << "Day difference: " << dayCount << endl;
+
 		cout << setw(5) << ToDos[i].Id << setw(15) << ToDos[i].Tugas << setw(15) << ToDos[i].Prioritas << setw(15) << ToDos[i].Status << setw(40) << ToDos[i].Deadline << setw(40) << ToDos[i].Tanggal << endl;
 	}
 	cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
@@ -468,4 +477,18 @@ string TanggalWaktuSekarang(){
 string ConvertToLowercase(string str) {
 	transform(str.begin(), str.end(), str.begin(), ::tolower);
 	return str;
+}
+
+std::chrono::system_clock::time_point ConvertToDateTime(const std::string& deadline) {
+	std::tm tm = {};
+	std::istringstream iss(deadline);
+	iss >> std::get_time(&tm, "%a, %d %b %Y - %H:%M");
+	std::time_t t = std::mktime(&tm);
+	return std::chrono::system_clock::from_time_t(t);
+}
+
+int CalculateDayDifference(const std::chrono::system_clock::time_point& deadlineDateTime) {
+	std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
+	std::chrono::duration<int, std::ratio<86400>> dayDifference = std::chrono::duration_cast<std::chrono::duration<int, std::ratio<86400>>>(deadlineDateTime - now);
+	return dayDifference.count();
 }
