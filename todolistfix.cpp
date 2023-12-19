@@ -2,16 +2,11 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include<iostream>
-#include<string>
-#include<ctime>
-#include <vector>
-#include<cstring>
-#include<chrono>
-#include<sstream>
-#include<iomanip>
-#include <cctype>
-#include <algorithm>
+#include <ctime>
+#include <cstring>
+#include <chrono>
+#include <sstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -154,10 +149,17 @@ void EditTugas(int id){
 		cout << "Silakan pilih: ";
 		cin >> pilihanedit;
 
-		while (pilihanedit < 1 || pilihanedit > 4) {
-			cout << "Input salah! Silakan pilih kembali: ";
-			cin >> pilihanedit;
-		}
+		do {
+		    cout << "Silakan pilih: ";
+		    cin >> pilihanedit;
+		    if (cin.fail()) {
+		        cout << "Input salah. Harap masukkan angka!" << endl;
+		        cin.clear();
+		        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		    } else {
+		        break;
+		    }
+		} while (true);
 
 		if(pilihanedit == 1){
 			cout << "Tugas: ";
@@ -221,16 +223,58 @@ void EditTugas(int id){
 }
 
 void LihatToDo() {
-	cout << "*************************************************************************************************************************************************" << endl;
-	cout << "*                                   							Task List                                       								  *" << endl;
+	cout << "**********************************************************************************************************************************************************************" << endl;
+	cout << "*                                   							Daftar Tugas                                       								  *" << endl;
 	cout << "**************************************************************************************************************************************************" << endl;
-	cout << setw(5) << "ID" << setw(15) << "Task" << setw(20) << "Priority" << setw(20) << "Status" << setw(30) << "Deadline" << setw(30) << "Date Modified" << endl;
+	cout << setw(5) << "ID" << setw(10) << "Tugas" << setw(30) << "Prioritas" << setw(30) << "Status" << setw(35) << "Deadline" << setw(35) << "Keterangan" << setw(35) << "Tanggal Ubah" << endl;
 	cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
 	for (int i = 0; i < numTugas; i++) {
 		const Todo& todo = todos[i];
-		cout << setw(5) << todo.Id << setw(15) << todo.Tugas << setw(20) << todo.Prioritas << setw(20) << todo.Status << setw(30) << todo.Deadline << setw(30) << todo.Tanggal <<endl;
+
+		time_t WaktuSekarang = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+
+		tm WaktuDeadline = {};
+		istringstream deadlineStream(todo.Deadline);
+		deadlineStream >> std::get_time(&WaktuDeadline, "%A, %d %B %Y - %H:%M");
+
+		time_t deadline = std::mktime(&WaktuDeadline);
+
+		time_t SisaDetik = deadline - WaktuSekarang;
+
+		int SisaHari = SisaDetik / (60 * 60 * 24);
+
+		int SisaJam = SisaDetik / (60 * 60);
+
+		int SisaMenit = SisaDetik / 60;
+
+		string sisawaktu;
+
+		if (SisaHari == 0) {
+			int jam = SisaMenit / 60;
+			int menit = SisaMenit % 60;
+
+			if (SisaJam == 0) {
+				sisawaktu = to_string(menit) + " menit menuju deadline";
+			} else {
+				if(jam < 0 && menit < 0 ){
+					sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit telah terlewati";
+				} else {
+					sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit menuju deadline";
+				}
+			}
+			cout << setw(5) << todo.Id << setw(10) << todo.Tugas << setw(30) << todo.Prioritas << setw(30) << todo.Status << setw(35) << todo.Deadline << setw(35) << sisawaktu << setw(35) << todo.Tanggal << endl;
+		} else if (SisaHari > 0) {
+			SisaHari = SisaMenit / (60 * 24);
+			SisaJam = (SisaMenit % (60 * 24)) / 60;
+			SisaMenit = (SisaMenit % (60 * 24)) % 60;
+
+			sisawaktu = to_string(SisaHari) + " hari " + to_string(SisaJam) + " jam " + to_string(SisaMenit) + " menit menuju deadline";
+			cout << setw(5) << todo.Id << setw(10) << todo.Tugas << setw(30) << todo.Prioritas << setw(30) << todo.Status << setw(35) << todo.Deadline << setw(35) << sisawaktu << setw(35) << todo.Tanggal << endl;
+		} else {
+			sisawaktu = to_string(abs(SisaHari)) + " hari telah terlewati";
+			cout << setw(5) << todo.Id << setw(10) << todo.Tugas << setw(30) << todo.Prioritas << setw(30) << todo.Status << setw(35) << todo.Deadline << setw(35) << sisawaktu << setw(35) << todo.Tanggal << endl;
+		}
 	}
-	cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
 }
 
 void CariToDo(){
@@ -245,138 +289,369 @@ void CariToDo(){
 	cout << "(5) Pencarian Berdasarkan deadline" << endl;
 	cout << "************" << endl;
 
-	cout << "Masukkan pilihan pencarian: ";
-	cin >> pilihanpencarian;
+	do {
+	    cout << "Masukkan pilihan pencarian: ";
+	    cin >> pilihanpencarian;
+	    if (cin.fail()) {
+	        cout << "Input salah. Harap masukkan angka!" << endl;
+	        cin.clear();
+	        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	    } else {
+			break;
+	    }
+	} while (true);
 
 	if(pilihanpencarian == 1){
-		int id;
-		cout << "Masukkan ID tugas yang ingin dicari: ";
-		cin >> id;
+		int id;		
+		do {
+		    cout << "Masukkan ID tugas yang ingin dicari: ";
+		    cin >> id;
+		    if (cin.fail()) {
+		        cout << "Input salah. Harap masukkan angka!" << endl;
+		        cin.clear();
+		        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		    } else {
+				break;
+		    }
+		} while (true);
+
+		vector<const Todo*> mencocokkanTodos;
 
 		auto it = find_if(todos, todos + numTugas, [id](const Todo& todo) {
 			return todo.Id == id;
 		});
-			if(it != todos + numTugas){
-				cout << "*************************************************************************************************************************************************" << endl;
-				cout << "*                                   							Task List                                       								  *" << endl;
-				cout << "**************************************************************************************************************************************************" << endl;
-				cout << setw(5) << "ID" << setw(15) << "Task" << setw(20) << "Priority" << setw(20) << "Status" << setw(30) << "Deadline" << setw(30) << "Date Modified" << endl;
-				cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-				for (int i = 0; i < numTugas; i++) {
-					const Todo& todo = todos[it - todos];
-					cout << setw(5) << todo.Id << setw(15) << todo.Tugas << setw(20) << todo.Prioritas << setw(20) << todo.Status << setw(30) << todo.Deadline << setw(30) << todo.Tanggal <<endl;
+
+		while (it != todos + numTugas) {
+			mencocokkanTodos.push_back(&(*it));
+			it = find_if(it + 1, todos + numTugas, [id](const Todo& todo) {
+				return todo.Id == id;
+			});
+		}
+
+		if (!mencocokkanTodos.empty()) {
+			cout << "*************************************************************************************************************************************************" << endl;
+			cout << "*                                   							Daftar Tugas                                       								  *" << endl;
+			cout << "**************************************************************************************************************************************************" << endl;
+			cout << setw(5) << "ID" << setw(10) << "Tugas" << setw(30) << "Prioritas" << setw(30) << "Status" << setw(35) << "Deadline" << setw(35) << "Keterangan" << setw(35) << "Tanggal Ubah" << endl;
+			cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+			
+			for (const Todo* todo : mencocokkanTodos) {
+
+				time_t WaktuSekarang = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+
+				tm WaktuDeadline = {};
+				istringstream deadlineStream(todo->Deadline);
+				deadlineStream >> std::get_time(&WaktuDeadline, "%A, %d %B %Y - %H:%M");
+
+				time_t deadline = std::mktime(&WaktuDeadline);
+
+				time_t SisaDetik = deadline - WaktuSekarang;
+
+				int SisaHari = SisaDetik / (60 * 60 * 24);
+
+				int SisaJam = SisaDetik / (60 * 60);
+
+				int SisaMenit = SisaDetik / 60;
+
+				string sisawaktu;
+
+				if (SisaHari == 0) {
+					int jam = SisaMenit / 60;
+					int menit = SisaMenit % 60;
+
+					if (SisaJam == 0) {
+						sisawaktu = to_string(menit) + " menit menuju deadline";
+					} else {
+						if(jam < 0 && menit < 0 ){
+							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit telah terlewati";
+						} else {
+							sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit menuju deadline";
+						}
+					}
+					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
+				} else if (SisaHari > 0) {
+					SisaHari = SisaMenit / (60 * 24);
+					SisaJam = (SisaMenit % (60 * 24)) / 60;
+					SisaMenit = (SisaMenit % (60 * 24)) % 60;
+
+					sisawaktu = to_string(SisaHari) + " hari " + to_string(SisaJam) + " jam " + to_string(SisaMenit) + " menit menuju deadline";
+					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
+				} else {
+					sisawaktu = to_string(abs(SisaHari)) + " hari telah terlewati";
+					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
 				}
-				cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-			} else {
-				cout << "Tugas dengan ID " << id << " tidak ditemukan!" << endl;
-				return;
 			}
+			cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+		} else {
+			cout << "Tugas dengan ID " << id << " tidak ditemukan!" << endl;
+			return;
+		}
 	} else if(pilihanpencarian == 2){
 		cout << "Masukkan nama tugas yang ingin dicari: ";
 		cin.ignore();
 		getline(cin, Tugas);
 
-		for (int i = 0; i < numTugas; i++) {
-			if (ConvertToLowercase(todos[i].Tugas) == ConvertToLowercase(Tugas)) {
-				cout << "Tugas dengan nama " << Tugas << " ditemukan!" << endl;
-				cout << "*************************************************************************************************************************************************" << endl;
-				cout << "*                                   							Daftar Tugas                                       								  *" << endl;
-				cout << "**************************************************************************************************************************************************" << endl;
-				cout << setw(5) << "ID" << setw(15) << "Tugas" << setw(15) << "Prioritas" << setw(15) << "Status" << setw(30) << "Deadline" << setw(30) << "Tanggal Diubah" << endl;
-				cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-				for (int j = 0; j < numTugas; j++) {
-					if (ConvertToLowercase(todos[j].Tugas) == ConvertToLowercase(Tugas)) {
-						cout << setw(5) << todos[j].Id << setw(15) << todos[j].Tugas << setw(15) << todos[j].Prioritas << setw(15) << todos[j].Status << setw(40) << todos[j].Deadline << setw(40) << todos[j].Tanggal << endl;
+		vector<const Todo*> mencocokkanTodos;
+
+		auto it = find_if(todos, todos + numTugas, [=](const Todo& todo) {
+			return ConvertToLowercase(todo.Tugas) == ConvertToLowercase(Tugas);
+		});
+
+		while (it != todos + numTugas) {
+			mencocokkanTodos.push_back(&(*it));
+			it = find_if(it + 1, todos + numTugas, [=](const Todo& todo) {
+				return ConvertToLowercase(todo.Status) == ConvertToLowercase(Status);
+			});
+		}
+
+		if (!mencocokkanTodos.empty()) {
+			cout << "Tugas dengan nama " << Tugas << " ditemukan!" << endl;
+			cout << "*************************************************************************************************************************************************" << endl;
+			cout << "*                                   							Daftar Tugas                                       								  *" << endl;
+			cout << "**************************************************************************************************************************************************" << endl;
+			cout << setw(5) << "ID" << setw(15) << "Tugas" << setw(15) << "Prioritas" << setw(15) << "Status" << setw(30) << "Deadline" << setw(30) << "Tanggal Diubah" << endl;
+			cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+			
+			for (const Todo* todo : mencocokkanTodos) {
+				time_t WaktuSekarang = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+
+				tm WaktuDeadline = {};
+				istringstream deadlineStream(todo->Deadline);
+				deadlineStream >> std::get_time(&WaktuDeadline, "%A, %d %B %Y - %H:%M");
+
+				time_t deadline = std::mktime(&WaktuDeadline);
+
+				time_t SisaDetik = deadline - WaktuSekarang;
+
+				int SisaHari = SisaDetik / (60 * 60 * 24);
+
+				int SisaJam = SisaDetik / (60 * 60);
+
+				int SisaMenit = SisaDetik / 60;
+
+				string sisawaktu;
+
+				if (SisaHari == 0) {
+					int jam = SisaMenit / 60;
+					int menit = SisaMenit % 60;
+
+					if (SisaJam == 0) {
+						sisawaktu = to_string(menit) + " menit menuju deadline";
+					} else {
+						if(jam < 0 && menit < 0 ){
+							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit telah terlewati";
+						} else {
+							sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit menuju deadline";
+						}
 					}
-				}
-				cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
+				} else if (SisaHari > 0) {
+					SisaHari = SisaMenit / (60 * 24);
+					SisaJam = (SisaMenit % (60 * 24)) / 60;
+					SisaMenit = (SisaMenit % (60 * 24)) % 60;
 
-				cout << "Apakah Anda ingin mencari lagi? Y/T: ";
-				getline(cin, ulangicari);
-
-				if (ulangicari == "Y" || ulangicari == "y") {
-					CariToDo();
-				} else if (ulangicari == "T" || ulangicari == "t") {
-					return;
+					sisawaktu = to_string(SisaHari) + " hari " + to_string(SisaJam) + " jam " + to_string(SisaMenit) + " menit menuju deadline";
+					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
 				} else {
-					cout << "Input salah!" << endl;
-					return;
+					sisawaktu = to_string(abs(SisaHari)) + " hari telah terlewati";
+					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
 				}
+			}
+			cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+
+			cout << "Apakah Anda ingin mencari lagi? Y/T: ";
+			getline(cin, ulangicari);
+
+			if (ulangicari == "Y" || ulangicari == "y") {
+				CariToDo();
+			} else if (ulangicari == "T" || ulangicari == "t") {
+				return;
 			} else {
-				cout << "Tugas dengan nama " << Tugas << " tidak ditemukan!" << endl;
+				cout << "Input salah!" << endl;
 				return;
 			}
+		} else {
+			cout << "Tugas dengan nama " << Tugas << " tidak ditemukan!" << endl;
+			return;
 		}
 	} else if(pilihanpencarian == 3){
 		cout << "Masukkan prioritas tugas yang ingin dicari: ";
 		cin.ignore();
 		getline(cin, Prioritas);
 
-		for (int i = 0; i < numTugas; i++) {
-			cout << ConvertToLowercase(todos[i].Prioritas);
-			if (ConvertToLowercase(todos[i].Prioritas) == ConvertToLowercase(Prioritas)) {
-				cout << "Tugas dengan prioritas " << Prioritas << " ditemukan!" << endl;
-				cout << "*************************************************************************************************************************************************" << endl;
-				cout << "*                                   							Daftar Tugas                                       								  *" << endl;
-				cout << "**************************************************************************************************************************************************" << endl;
-				cout << setw(5) << "ID" << setw(15) << "Tugas" << setw(15) << "Prioritas" << setw(15) << "Status" << setw(30) << "Deadline" << setw(30) << "Tanggal Diubah" << endl;
-				cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-				// for (int j = 0; j < numTugas; j++) {
-					// if (ConvertToLowercase(todos[j].Prioritas) == ConvertToLowercase(Prioritas)) {
-						cout << setw(5) << todos[i].Id << setw(15) << todos[i].Tugas << setw(15) << todos[i].Prioritas << setw(15) << todos[i].Status << setw(40) << todos[i].Deadline << setw(40) << todos[i].Tanggal << endl;
-					//}
-				//}
-				cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-				
-				cout << "Apakah Anda ingin mencari lagi? Y/T: ";
-				getline(cin, ulangicari);
-				
-				if (ulangicari == "Y" || ulangicari == "y") {
-					CariToDo();
-				} else if (ulangicari == "T" || ulangicari == "t") {
-					return;
+		vector<const Todo*> mencocokkanTodos;
+
+		auto it = find_if(todos, todos + numTugas, [=](const Todo& todo) {
+			return ConvertToLowercase(todo.Prioritas) == ConvertToLowercase(Prioritas);
+		});
+
+		while (it != todos + numTugas) {
+			mencocokkanTodos.push_back(&(*it));
+			it = find_if(it + 1, todos + numTugas, [=](const Todo& todo) {
+				return ConvertToLowercase(todo.Status) == ConvertToLowercase(Status);
+			});
+		}
+
+		if (!mencocokkanTodos.empty()) {
+			cout << "Tugas dengan prioritas " << Prioritas << " ditemukan!" << endl;
+			cout << "*************************************************************************************************************************************************" << endl;
+			cout << "*                                   							Daftar Tugas                                       								  *" << endl;
+			cout << "**************************************************************************************************************************************************" << endl;
+			cout << setw(5) << "ID" << setw(15) << "Tugas" << setw(15) << "Prioritas" << setw(15) << "Status" << setw(30) << "Deadline" << setw(30) << "Tanggal Diubah" << endl;
+			cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+			
+			for (const Todo* todo : mencocokkanTodos) {
+
+				time_t WaktuSekarang = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+
+				tm WaktuDeadline = {};
+				istringstream deadlineStream(todo->Deadline);
+				deadlineStream >> std::get_time(&WaktuDeadline, "%A, %d %B %Y - %H:%M");
+
+				time_t deadline = std::mktime(&WaktuDeadline);
+
+				time_t SisaDetik = deadline - WaktuSekarang;
+
+				int SisaHari = SisaDetik / (60 * 60 * 24);
+
+				int SisaJam = SisaDetik / (60 * 60);
+
+				int SisaMenit = SisaDetik / 60;
+
+				string sisawaktu;
+
+				if (SisaHari == 0) {
+					int jam = SisaMenit / 60;
+					int menit = SisaMenit % 60;
+
+					if (SisaJam == 0) {
+						sisawaktu = to_string(menit) + " menit menuju deadline";
+					} else {
+						if(jam < 0 && menit < 0 ){
+							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit telah terlewati";
+						} else {
+							sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit menuju deadline";
+						}
+					}
+					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
+				} else if (SisaHari > 0) {
+					SisaHari = SisaMenit / (60 * 24);
+					SisaJam = (SisaMenit % (60 * 24)) / 60;
+					SisaMenit = (SisaMenit % (60 * 24)) % 60;
+
+					sisawaktu = to_string(SisaHari) + " hari " + to_string(SisaJam) + " jam " + to_string(SisaMenit) + " menit menuju deadline";
+					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
 				} else {
-					cout << "Input salah!" << endl;
-					return;
+					sisawaktu = to_string(abs(SisaHari)) + " hari telah terlewati";
+					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
 				}
+			}
+
+			cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+			
+			cout << "Apakah Anda ingin mencari lagi? Y/T: ";
+			getline(cin, ulangicari);
+			
+			if (ulangicari == "Y" || ulangicari == "y") {
+				CariToDo();
+			} else if (ulangicari == "T" || ulangicari == "t") {
+				return;
 			} else {
-				cout << "Tugas dengan prioritas " << Prioritas << " tidak ditemukan!" << endl;
+				cout << "Input salah!" << endl;
 				return;
 			}
+		} else {
+			cout << "Tugas dengan prioritas " << Prioritas << " tidak ditemukan!" << endl;
+			return;
 		}
 	} else if(pilihanpencarian == 4){
 		cout << "Masukkan status tugas yang ingin dicari: ";
 		cin.ignore();
 		getline(cin, Status);
 
-		for (int i = 0; i < numTugas; i++) {
-			if (ConvertToLowercase(todos[i].Status) == ConvertToLowercase(Status)) {
-				cout << "Tugas dengan status " << Status << " ditemukan!" << endl;
-				cout << "*************************************************************************************************************************************************" << endl;
-				cout << "*                                   							Daftar Tugas                                       								  *" << endl;
-				cout << "**************************************************************************************************************************************************" << endl;
-				cout << setw(5) << "ID" << setw(15) << "Tugas" << setw(15) << "Prioritas" << setw(15) << "Status" << setw(30) << "Deadline" << setw(30) << "Tanggal Diubah" << endl;
-				cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-				for (int j = i; j < numTugas; j++) {
-					if (ConvertToLowercase(todos[j].Status) == ConvertToLowercase(Status)) {
-						cout << setw(5) << todos[j].Id << setw(15) << todos[j].Tugas << setw(15) << todos[j].Prioritas << setw(15) << todos[j].Status << setw(40) << todos[j].Deadline << setw(40) << todos[j].Tanggal << endl;
+		vector<const Todo*> mencocokkanTodos;
+
+		auto it = find_if(todos, todos + numTugas, [=](const Todo& todo) {
+			return ConvertToLowercase(todo.Status) == ConvertToLowercase(Status);
+		});
+
+		while (it != todos + numTugas) {
+			mencocokkanTodos.push_back(&(*it));
+			it = find_if(it + 1, todos + numTugas, [=](const Todo& todo) {
+				return ConvertToLowercase(todo.Status) == ConvertToLowercase(Status);
+			});
+		}
+
+		if (!mencocokkanTodos.empty()) {
+			cout << "Tugas dengan status " << Status << " ditemukan!" << endl;
+			cout << "*************************************************************************************************************************************************" << endl;
+			cout << "*                                   							Daftar Tugas                                       								  *" << endl;
+			cout << "**************************************************************************************************************************************************" << endl;
+			cout << setw(5) << "ID" << setw(15) << "Tugas" << setw(15) << "Prioritas" << setw(15) << "Status" << setw(30) << "Deadline" << setw(30) << "Tanggal Diubah" << endl;
+			cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+
+			for (const Todo* todo : mencocokkanTodos) {
+
+				time_t WaktuSekarang = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+
+				tm WaktuDeadline = {};
+				istringstream deadlineStream(todo->Deadline);
+				deadlineStream >> std::get_time(&WaktuDeadline, "%A, %d %B %Y - %H:%M");
+
+				time_t deadline = std::mktime(&WaktuDeadline);
+
+				time_t SisaDetik = deadline - WaktuSekarang;
+
+				int SisaHari = SisaDetik / (60 * 60 * 24);
+
+				int SisaJam = SisaDetik / (60 * 60);
+
+				int SisaMenit = SisaDetik / 60;
+
+				string sisawaktu;
+
+				if (SisaHari == 0) {
+					int jam = SisaMenit / 60;
+					int menit = SisaMenit % 60;
+
+					if (SisaJam == 0) {
+						sisawaktu = to_string(menit) + " menit menuju deadline";
+					} else {
+						if(jam < 0 && menit < 0 ){
+							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit telah terlewati";
+						} else {
+							sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit menuju deadline";
+						}
 					}
-				}
-				cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-				cout << "Apakah Anda ingin mencari lagi? Y/T: ";
-				getline(cin, ulangicari);
-				if (ulangicari == "Y" || ulangicari == "y") {
-					CariToDo();
-				} else if (ulangicari == "T" || ulangicari == "t") {
-					return;
+					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
+				} else if (SisaHari > 0) {
+					SisaHari = SisaMenit / (60 * 24);
+					SisaJam = (SisaMenit % (60 * 24)) / 60;
+					SisaMenit = (SisaMenit % (60 * 24)) % 60;
+
+					sisawaktu = to_string(SisaHari) + " hari " + to_string(SisaJam) + " jam " + to_string(SisaMenit) + " menit menuju deadline";
+					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
 				} else {
-					cout << "Input salah!" << endl;
-					return;
+					sisawaktu = to_string(abs(SisaHari)) + " hari telah terlewati";
+					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
 				}
+			}
+			cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+
+			cout << "Apakah Anda ingin mencari lagi? Y/T: ";
+			getline(cin, ulangicari);
+
+			if (ulangicari == "Y" || ulangicari == "y") {
+				CariToDo();
+			} else if (ulangicari == "T" || ulangicari == "t") {
+				return;
 			} else {
-				cout << "Tugas dengan status " << Status << " tidak ditemukan!" << endl;
+				cout << "Input salah!" << endl;
 				return;
 			}
+		} else {
+			cout << "Tugas dengan status " << Status << " tidak ditemukan!" << endl;
+			return;
 		}
 	} else if(pilihanpencarian == 5){
 		cout << "Masukkan deadline yang ingin dicari (DD/MM/YYYY HH:MM): ";
@@ -401,34 +676,89 @@ void CariToDo(){
 		DeadlineFormatted << put_time(&DateTime, "%A, %d %B %Y - %H:%M");
 		string LowercaseDeadline = ConvertToLowercase(DeadlineFormatted.str().c_str());
 
-		for (int i = 0; i < numTugas; i++) {
-			if (ConvertToLowercase(todos[i].Deadline) == LowercaseDeadline) {
-				cout << "Tugas dengan deadline " << DeadlineFormatted.str().c_str() << " ditemukan!" << endl;
-				cout << "*************************************************************************************************************************************************" << endl;
-				cout << "*                                   							Daftar Tugas                                       								  *" << endl;
-				cout << "**************************************************************************************************************************************************" << endl;
-				cout << setw(5) << "ID" << setw(15) << "Tugas" << setw(15) << "Prioritas" << setw(15) << "Status" << setw(30) << "Deadline" << setw(30) << "Tanggal Diubah" << endl;
-				cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-				for (int j = i; j < numTugas; j++) {
-					if (ConvertToLowercase(todos[j].Deadline) == LowercaseDeadline) {
-						cout << setw(5) << todos[j].Id << setw(15) << todos[j].Tugas << setw(15) << todos[j].Prioritas << setw(15) << todos[j].Status << setw(40) << todos[j].Deadline << setw(40) << todos[j].Tanggal << endl;
+		vector<const Todo*> mencocokkanTodos;
+
+		auto it = find_if(todos, todos + numTugas, [LowercaseDeadline](const Todo& todo) {
+			return ConvertToLowercase(todo.Deadline) == LowercaseDeadline;
+		});
+
+		while (it != todos + numTugas) {
+			mencocokkanTodos.push_back(&(*it));
+			it = find_if(it + 1, todos + numTugas, [=](const Todo& todo) {
+				return ConvertToLowercase(todo.Deadline) == LowercaseDeadline;
+			});
+		}
+
+		if (!mencocokkanTodos.empty()) {
+			cout << "Tugas dengan deadline " << DeadlineFormatted.str().c_str() << " ditemukan!" << endl;
+			cout << "*************************************************************************************************************************************************" << endl;
+			cout << "*                                   							Daftar Tugas                                       								  *" << endl;
+			cout << "**************************************************************************************************************************************************" << endl;
+			cout << setw(5) << "ID" << setw(15) << "Tugas" << setw(15) << "Prioritas" << setw(15) << "Status" << setw(30) << "Deadline" << setw(30) << "Tanggal Diubah" << endl;
+			cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+
+			for (const Todo* todo : mencocokkanTodos) {
+
+				time_t WaktuSekarang = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+
+				tm WaktuDeadline = {};
+				istringstream deadlineStream(todo->Deadline);
+				deadlineStream >> std::get_time(&WaktuDeadline, "%A, %d %B %Y - %H:%M");
+
+				time_t deadline = std::mktime(&WaktuDeadline);
+
+				time_t SisaDetik = deadline - WaktuSekarang;
+
+				int SisaHari = SisaDetik / (60 * 60 * 24);
+
+				int SisaJam = SisaDetik / (60 * 60);
+
+				int SisaMenit = SisaDetik / 60;
+
+				string sisawaktu;
+
+				if (SisaHari == 0) {
+					int jam = SisaMenit / 60;
+					int menit = SisaMenit % 60;
+
+					if (SisaJam == 0) {
+						sisawaktu = to_string(menit) + " menit menuju deadline";
+					} else {
+						if(jam < 0 && menit < 0 ){
+							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit telah terlewati";
+						} else {
+							sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit menuju deadline";
+						}
 					}
-				}
-				cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-				cout << "Apakah Anda ingin mencari lagi? Y/T: ";
-				getline(cin, ulangicari);
-				if (ulangicari == "Y" || ulangicari == "y") {
-					CariToDo();
-				} else if (ulangicari == "T" || ulangicari == "t") {
-					return;
+					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
+				} else if (SisaHari > 0) {
+					SisaHari = SisaMenit / (60 * 24);
+					SisaJam = (SisaMenit % (60 * 24)) / 60;
+					SisaMenit = (SisaMenit % (60 * 24)) % 60;
+
+					sisawaktu = to_string(SisaHari) + " hari " + to_string(SisaJam) + " jam " + to_string(SisaMenit) + " menit menuju deadline";
+					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
 				} else {
-					cout << "Input salah!" << endl;
-					return;
+					sisawaktu = to_string(abs(SisaHari)) + " hari telah terlewati";
+					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
 				}
+			}
+			cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+
+			cout << "Apakah Anda ingin mencari lagi? Y/T: ";
+			getline(cin, ulangicari);
+			
+			if (ulangicari == "Y" || ulangicari == "y") {
+				CariToDo();
+			} else if (ulangicari == "T" || ulangicari == "t") {
+				return;
 			} else {
-				cout << "Tugas dengan deadline " <<  DeadlineFormatted.str().c_str() << " tidak ditemukan!" << endl;
+				cout << "Input salah!" << endl;
 				return;
 			}
+		} else {
+			cout << "Tugas dengan deadline " <<  DeadlineFormatted.str().c_str() << " tidak ditemukan!" << endl;
+			return;
 		}
 	} else {
 		cout << "Input salah!" << endl;
@@ -455,13 +785,31 @@ int main() {
 				LihatToDo();
 				break;
 			case 3:
-				cout << "Masukkan ID tugas yang ingin diedit: ";
-				cin >> id;
+				do {
+				    cout << "Masukkan ID tugas yang ingin diedit: ";
+				    cin >> id;
+				    if (cin.fail()) {
+				        cout << "Input salah. Harap masukkan angka!" << endl;
+				        cin.clear();
+				        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				    } else {
+				        break;
+				    }
+				} while (true);
 				EditTugas(id);
 				break;
 			case 4:
-				cout << "Masukkan ID tugas yang ingin dihapus: ";
-				cin >> id;
+				do {
+				    cout << "Masukkan ID tugas yang ingin dihapus: ";
+				    cin >> id;
+				    if (cin.fail()) {
+				        cout << "Input salah. Harap masukkan angka!" << endl;
+				        cin.clear();
+				        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				    } else {
+				        break;
+				    }
+				} while (true);
 				HapusToDo(id);
 				break;
 			case 5:
@@ -476,5 +824,5 @@ int main() {
 		}
 		cout << endl;
 	} while (pilihan != 4);
-	return 0;
+	// return 0;
 }
