@@ -223,11 +223,12 @@ void EditTugas(int id){
 }
 
 void LihatToDo() {
-	cout << "**********************************************************************************************************************************************************************" << endl;
-	cout << "*                                   							Daftar Tugas                                       								  *" << endl;
-	cout << "**************************************************************************************************************************************************" << endl;
-	cout << setw(5) << "ID" << setw(10) << "Tugas" << setw(30) << "Prioritas" << setw(30) << "Status" << setw(35) << "Deadline" << setw(35) << "Keterangan" << setw(35) << "Tanggal Ubah" << endl;
-	cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+	cout << "____________________________________________________________________________________________________________________________________________________________________________________" << endl;
+	cout << "||                                                                          Daftar Tugas                               					                          ||" << endl;
+	cout << "||________________________________________________________________________________________________________________________________________________________________________________||" << endl;
+	cout << "||" <<setw(5) << "ID" <<setw(5) << "||"<<setw(10) << "Tugas" << setw(7) <<"||" <<setw(15) << "Prioritas" <<setw(7) <<"||" <<setw(10) << "Status" <<setw(6) <<"||" <<setw(24) << "Deadline" <<setw(18) <<"||" <<setw(19) << "Sisa Waktu" <<setw(10) <<"||" <<setw(26)<< "Tanggal Ubah" <<setw(16) <<"||"<< endl;
+	cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
+
 	for (int i = 0; i < numTugas; i++) {
 		const Todo& todo = todos[i];
 
@@ -254,27 +255,53 @@ void LihatToDo() {
 			int menit = SisaMenit % 60;
 
 			if (SisaJam == 0) {
-				sisawaktu = to_string(menit) + " menit menuju deadline";
+				sisawaktu = to_string(menit) + " menit";
 			} else {
 				if(jam < 0 && menit < 0 ){
-					sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit telah terlewati";
+					sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit";
 				} else {
-					sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit menuju deadline";
+					sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit";
 				}
 			}
-			cout << setw(5) << todo.Id << setw(10) << todo.Tugas << setw(30) << todo.Prioritas << setw(30) << todo.Status << setw(35) << todo.Deadline << setw(35) << sisawaktu << setw(35) << todo.Tanggal << endl;
+			cout << "||";
+			cout << setw(8) <<left << todo.Id;
+			cout << "||" << setw(15) << todo.Tugas <<left;
+			cout << "||" << setw(20) << todo.Prioritas <<left;
+			cout << "||" << setw(14) << todo.Status <<left;
+			cout << "||" << setw(40) << todo.Deadline <<left;
+			cout << "||" << setw(27) << sisawaktu <<left;
+			cout << "||" << setw(40) << todo.Tanggal <<left;
+			cout << "||" <<endl;
 		} else if (SisaHari > 0) {
 			SisaHari = SisaMenit / (60 * 24);
 			SisaJam = (SisaMenit % (60 * 24)) / 60;
 			SisaMenit = (SisaMenit % (60 * 24)) % 60;
 
-			sisawaktu = to_string(SisaHari) + " hari " + to_string(SisaJam) + " jam " + to_string(SisaMenit) + " menit menuju deadline";
-			cout << setw(5) << todo.Id << setw(10) << todo.Tugas << setw(30) << todo.Prioritas << setw(30) << todo.Status << setw(35) << todo.Deadline << setw(35) << sisawaktu << setw(35) << todo.Tanggal << endl;
+			sisawaktu = to_string(SisaHari) + " hari " + to_string(SisaJam) + " jam " + to_string(SisaMenit) + " menit";
+			cout << "||";
+			cout << setw(8) <<left << todo.Id;
+			cout << "||" << setw(15) << todo.Tugas <<left;
+			cout << "||" << setw(20) << todo.Prioritas <<left;
+			cout << "||" << setw(14) << todo.Status <<left;
+			cout << "||" << setw(40) << todo.Deadline <<left;
+			cout << "||" << setw(27) << sisawaktu <<left;
+			cout << "||" << setw(40) << todo.Tanggal <<left;
+			cout << "||" <<endl;
+		
 		} else {
 			sisawaktu = to_string(abs(SisaHari)) + " hari telah terlewati";
-			cout << setw(5) << todo.Id << setw(10) << todo.Tugas << setw(30) << todo.Prioritas << setw(30) << todo.Status << setw(35) << todo.Deadline << setw(35) << sisawaktu << setw(35) << todo.Tanggal << endl;
+			cout << "||";
+			cout << setw(8) <<left << todo.Id;
+			cout << "||" << setw(15) << todo.Tugas <<left;
+			cout << "||" << setw(20) << todo.Prioritas <<left;
+			cout << "||" << setw(14) << todo.Status <<left;
+			cout << "||" << setw(40) << todo.Deadline <<left;
+			cout << "||" << setw(27) << sisawaktu <<left;
+			cout << "||" << setw(40) << todo.Tanggal <<left;
+			cout << "||" <<endl;
 		}
 	}
+	cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
 }
 
 void CariToDo(){
@@ -329,12 +356,12 @@ void CariToDo(){
 		}
 
 		if (!mencocokkanTodos.empty()) {
-			cout << "*************************************************************************************************************************************************" << endl;
-			cout << "*                                   							Daftar Tugas                                       								  *" << endl;
-			cout << "**************************************************************************************************************************************************" << endl;
-			cout << setw(5) << "ID" << setw(10) << "Tugas" << setw(30) << "Prioritas" << setw(30) << "Status" << setw(35) << "Deadline" << setw(35) << "Keterangan" << setw(35) << "Tanggal Ubah" << endl;
-			cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-			
+			cout << "____________________________________________________________________________________________________________________________________________________________________________________" << endl;
+			cout << "||                                                                          Daftar Tugas                               					                          ||" << endl;
+			cout << "||________________________________________________________________________________________________________________________________________________________________________________||" << endl;
+			cout << "||" <<setw(5) << "ID" <<setw(5) << "||"<<setw(10) << "Tugas" << setw(7) <<"||" <<setw(15) << "Prioritas" <<setw(7) <<"||" <<setw(10) << "Status" <<setw(6) <<"||" <<setw(24) << "Deadline" <<setw(18) <<"||" <<setw(19) << "Sisa Waktu" <<setw(10) <<"||" <<setw(26)<< "Tanggal Ubah" <<setw(16) <<"||"<< endl;
+			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
+
 			for (const Todo* todo : mencocokkanTodos) {
 
 				time_t WaktuSekarang = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
@@ -360,12 +387,12 @@ void CariToDo(){
 					int menit = SisaMenit % 60;
 
 					if (SisaJam == 0) {
-						sisawaktu = to_string(menit) + " menit menuju deadline";
+						sisawaktu = to_string(menit) + " menit";
 					} else {
 						if(jam < 0 && menit < 0 ){
-							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit telah terlewati";
+							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit";
 						} else {
-							sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit menuju deadline";
+							sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit";
 						}
 					}
 					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
@@ -374,14 +401,14 @@ void CariToDo(){
 					SisaJam = (SisaMenit % (60 * 24)) / 60;
 					SisaMenit = (SisaMenit % (60 * 24)) % 60;
 
-					sisawaktu = to_string(SisaHari) + " hari " + to_string(SisaJam) + " jam " + to_string(SisaMenit) + " menit menuju deadline";
+					sisawaktu = to_string(SisaHari) + " hari " + to_string(SisaJam) + " jam " + to_string(SisaMenit) + " menit";
 					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
 				} else {
 					sisawaktu = to_string(abs(SisaHari)) + " hari telah terlewati";
 					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
 				}
 			}
-			cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
 		} else {
 			cout << "Tugas dengan ID " << id << " tidak ditemukan!" << endl;
 			return;
@@ -405,13 +432,12 @@ void CariToDo(){
 		}
 
 		if (!mencocokkanTodos.empty()) {
-			cout << "Tugas dengan nama " << Tugas << " ditemukan!" << endl;
-			cout << "*************************************************************************************************************************************************" << endl;
-			cout << "*                                   							Daftar Tugas                                       								  *" << endl;
-			cout << "**************************************************************************************************************************************************" << endl;
-			cout << setw(5) << "ID" << setw(15) << "Tugas" << setw(15) << "Prioritas" << setw(15) << "Status" << setw(30) << "Deadline" << setw(30) << "Tanggal Diubah" << endl;
-			cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-			
+			cout << "____________________________________________________________________________________________________________________________________________________________________________________" << endl;
+			cout << "||                                                                          Daftar Tugas                               					                          ||" << endl;
+			cout << "||________________________________________________________________________________________________________________________________________________________________________________||" << endl;
+			cout << "||" <<setw(5) << "ID" <<setw(5) << "||"<<setw(10) << "Tugas" << setw(7) <<"||" <<setw(15) << "Prioritas" <<setw(7) <<"||" <<setw(10) << "Status" <<setw(6) <<"||" <<setw(24) << "Deadline" <<setw(18) <<"||" <<setw(19) << "Sisa Waktu" <<setw(10) <<"||" <<setw(26)<< "Tanggal Ubah" <<setw(16) <<"||"<< endl;
+			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
+
 			for (const Todo* todo : mencocokkanTodos) {
 				time_t WaktuSekarang = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 
@@ -436,28 +462,53 @@ void CariToDo(){
 					int menit = SisaMenit % 60;
 
 					if (SisaJam == 0) {
-						sisawaktu = to_string(menit) + " menit menuju deadline";
+						sisawaktu = to_string(menit) + " menit";
 					} else {
 						if(jam < 0 && menit < 0 ){
-							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit telah terlewati";
+							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit";
 						} else {
-							sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit menuju deadline";
+							sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit";
 						}
 					}
-					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
+					cout << "||";
+					cout << setw(8) <<left << todo->Id;
+					cout << "||" << setw(15) << todo->Tugas <<left;
+					cout << "||" << setw(20) << todo->Prioritas <<left;
+					cout << "||" << setw(14) << todo->Status <<left;
+					cout << "||" << setw(40) << todo->Deadline <<left;
+					cout << "||" << setw(27) << sisawaktu <<left;
+					cout << "||" << setw(40) << todo->Tanggal <<left;
+					cout << "||" <<endl;
 				} else if (SisaHari > 0) {
 					SisaHari = SisaMenit / (60 * 24);
 					SisaJam = (SisaMenit % (60 * 24)) / 60;
 					SisaMenit = (SisaMenit % (60 * 24)) % 60;
 
-					sisawaktu = to_string(SisaHari) + " hari " + to_string(SisaJam) + " jam " + to_string(SisaMenit) + " menit menuju deadline";
-					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
+					sisawaktu = to_string(SisaHari) + " hari " + to_string(SisaJam) + " jam " + to_string(SisaMenit) + " menit";
+					sisawaktu = to_string(abs(SisaHari)) + " hari telah terlewati";
+					cout << "||";
+					cout << setw(8) <<left << todo->Id;
+					cout << "||" << setw(15) << todo->Tugas <<left;
+					cout << "||" << setw(20) << todo->Prioritas <<left;
+					cout << "||" << setw(14) << todo->Status <<left;
+					cout << "||" << setw(40) << todo->Deadline <<left;
+					cout << "||" << setw(27) << sisawaktu <<left;
+					cout << "||" << setw(40) << todo->Tanggal <<left;
+					cout << "||" <<endl;
 				} else {
 					sisawaktu = to_string(abs(SisaHari)) + " hari telah terlewati";
-					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
+					cout << "||";
+					cout << setw(8) <<left << todo->Id;
+					cout << "||" << setw(15) << todo->Tugas <<left;
+					cout << "||" << setw(20) << todo->Prioritas <<left;
+					cout << "||" << setw(14) << todo->Status <<left;
+					cout << "||" << setw(40) << todo->Deadline <<left;
+					cout << "||" << setw(27) << sisawaktu <<left;
+					cout << "||" << setw(40) << todo->Tanggal <<left;
+					cout << "||" <<endl;
 				}
 			}
-			cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
 
 			cout << "Apakah Anda ingin mencari lagi? Y/T: ";
 			getline(cin, ulangicari);
@@ -493,13 +544,12 @@ void CariToDo(){
 		}
 
 		if (!mencocokkanTodos.empty()) {
-			cout << "Tugas dengan prioritas " << Prioritas << " ditemukan!" << endl;
-			cout << "*************************************************************************************************************************************************" << endl;
-			cout << "*                                   							Daftar Tugas                                       								  *" << endl;
-			cout << "**************************************************************************************************************************************************" << endl;
-			cout << setw(5) << "ID" << setw(15) << "Tugas" << setw(15) << "Prioritas" << setw(15) << "Status" << setw(30) << "Deadline" << setw(30) << "Tanggal Diubah" << endl;
-			cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-			
+			cout << "____________________________________________________________________________________________________________________________________________________________________________________" << endl;
+			cout << "||                                                                          Daftar Tugas                               					                          ||" << endl;
+			cout << "||________________________________________________________________________________________________________________________________________________________________________________||" << endl;
+			cout << "||" <<setw(5) << "ID" <<setw(5) << "||"<<setw(10) << "Tugas" << setw(7) <<"||" <<setw(15) << "Prioritas" <<setw(7) <<"||" <<setw(10) << "Status" <<setw(6) <<"||" <<setw(24) << "Deadline" <<setw(18) <<"||" <<setw(19) << "Sisa Waktu" <<setw(10) <<"||" <<setw(26)<< "Tanggal Ubah" <<setw(16) <<"||"<< endl;
+			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
+
 			for (const Todo* todo : mencocokkanTodos) {
 
 				time_t WaktuSekarang = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
@@ -525,29 +575,52 @@ void CariToDo(){
 					int menit = SisaMenit % 60;
 
 					if (SisaJam == 0) {
-						sisawaktu = to_string(menit) + " menit menuju deadline";
+						sisawaktu = to_string(menit) + " menit";
 					} else {
 						if(jam < 0 && menit < 0 ){
 							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit telah terlewati";
 						} else {
-							sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit menuju deadline";
+							sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit";
 						}
 					}
-					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
+					cout << "||";
+					cout << setw(8) <<left << todo->Id;
+					cout << "||" << setw(15) << todo->Tugas <<left;
+					cout << "||" << setw(20) << todo->Prioritas <<left;
+					cout << "||" << setw(14) << todo->Status <<left;
+					cout << "||" << setw(40) << todo->Deadline <<left;
+					cout << "||" << setw(27) << sisawaktu <<left;
+					cout << "||" << setw(40) << todo->Tanggal <<left;
+					cout << "||" <<endl;
 				} else if (SisaHari > 0) {
 					SisaHari = SisaMenit / (60 * 24);
 					SisaJam = (SisaMenit % (60 * 24)) / 60;
 					SisaMenit = (SisaMenit % (60 * 24)) % 60;
 
-					sisawaktu = to_string(SisaHari) + " hari " + to_string(SisaJam) + " jam " + to_string(SisaMenit) + " menit menuju deadline";
-					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
+					sisawaktu = to_string(SisaHari) + " hari " + to_string(SisaJam) + " jam " + to_string(SisaMenit) + " menit";
+					cout << "||";
+					cout << setw(8) <<left << todo->Id;
+					cout << "||" << setw(15) << todo->Tugas <<left;
+					cout << "||" << setw(20) << todo->Prioritas <<left;
+					cout << "||" << setw(14) << todo->Status <<left;
+					cout << "||" << setw(40) << todo->Deadline <<left;
+					cout << "||" << setw(27) << sisawaktu <<left;
+					cout << "||" << setw(40) << todo->Tanggal <<left;
+					cout << "||" <<endl;
 				} else {
 					sisawaktu = to_string(abs(SisaHari)) + " hari telah terlewati";
-					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
-				}
+					cout << "||";
+					cout << setw(8) <<left << todo->Id;
+					cout << "||" << setw(15) << todo->Tugas <<left;
+					cout << "||" << setw(20) << todo->Prioritas <<left;
+					cout << "||" << setw(14) << todo->Status <<left;
+					cout << "||" << setw(40) << todo->Deadline <<left;
+					cout << "||" << setw(27) << sisawaktu <<left;
+					cout << "||" << setw(40) << todo->Tanggal <<left;
+					cout << "||" <<endl;
 			}
 
-			cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
 			
 			cout << "Apakah Anda ingin mencari lagi? Y/T: ";
 			getline(cin, ulangicari);
@@ -560,11 +633,14 @@ void CariToDo(){
 				cout << "Input salah!" << endl;
 				return;
 			}
-		} else {
-			cout << "Tugas dengan prioritas " << Prioritas << " tidak ditemukan!" << endl;
+			} 
+			}
+			else {
+				cout << "Tugas dengan prioritas " << Prioritas << " tidak ditemukan!" << endl;
 			return;
-		}
-	} else if(pilihanpencarian == 4){
+			}
+			} 
+		else if(pilihanpencarian == 4){
 		cout << "Masukkan status tugas yang ingin dicari: ";
 		cin.ignore();
 		getline(cin, Status);
@@ -583,12 +659,11 @@ void CariToDo(){
 		}
 
 		if (!mencocokkanTodos.empty()) {
-			cout << "Tugas dengan status " << Status << " ditemukan!" << endl;
-			cout << "*************************************************************************************************************************************************" << endl;
-			cout << "*                                   							Daftar Tugas                                       								  *" << endl;
-			cout << "**************************************************************************************************************************************************" << endl;
-			cout << setw(5) << "ID" << setw(15) << "Tugas" << setw(15) << "Prioritas" << setw(15) << "Status" << setw(30) << "Deadline" << setw(30) << "Tanggal Diubah" << endl;
-			cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+			cout << "____________________________________________________________________________________________________________________________________________________________________________________" << endl;
+			cout << "||                                                                          Daftar Tugas                               					                          ||" << endl;
+			cout << "||________________________________________________________________________________________________________________________________________________________________________________||" << endl;
+			cout << "||" <<setw(5) << "ID" <<setw(5) << "||"<<setw(10) << "Tugas" << setw(7) <<"||" <<setw(15) << "Prioritas" <<setw(7) <<"||" <<setw(10) << "Status" <<setw(6) <<"||" <<setw(24) << "Deadline" <<setw(18) <<"||" <<setw(19) << "Sisa Waktu" <<setw(10) <<"||" <<setw(26)<< "Tanggal Ubah" <<setw(16) <<"||"<< endl;
+			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
 
 			for (const Todo* todo : mencocokkanTodos) {
 
@@ -615,28 +690,52 @@ void CariToDo(){
 					int menit = SisaMenit % 60;
 
 					if (SisaJam == 0) {
-						sisawaktu = to_string(menit) + " menit menuju deadline";
+						sisawaktu = to_string(menit) + " menit";
 					} else {
 						if(jam < 0 && menit < 0 ){
-							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit telah terlewati";
+							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit";
 						} else {
-							sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit menuju deadline";
+							sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit";
 						}
 					}
-					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
+					cout << "||";
+					cout << setw(8) <<left << todo->Id;
+					cout << "||" << setw(15) << todo->Tugas <<left;
+					cout << "||" << setw(20) << todo->Prioritas <<left;
+					cout << "||" << setw(14) << todo->Status <<left;
+					cout << "||" << setw(40) << todo->Deadline <<left;
+					cout << "||" << setw(27) << sisawaktu <<left;
+					cout << "||" << setw(40) << todo->Tanggal <<left;
+					cout << "||" <<endl;
 				} else if (SisaHari > 0) {
 					SisaHari = SisaMenit / (60 * 24);
 					SisaJam = (SisaMenit % (60 * 24)) / 60;
 					SisaMenit = (SisaMenit % (60 * 24)) % 60;
 
-					sisawaktu = to_string(SisaHari) + " hari " + to_string(SisaJam) + " jam " + to_string(SisaMenit) + " menit menuju deadline";
-					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
+					sisawaktu = to_string(SisaHari) + " hari " + to_string(SisaJam) + " jam " + to_string(SisaMenit) + " menit";
+					cout << "||";
+					cout << setw(8) <<left << todo->Id;
+					cout << "||" << setw(15) << todo->Tugas <<left;
+					cout << "||" << setw(20) << todo->Prioritas <<left;
+					cout << "||" << setw(14) << todo->Status <<left;
+					cout << "||" << setw(40) << todo->Deadline <<left;
+					cout << "||" << setw(27) << sisawaktu <<left;
+					cout << "||" << setw(40) << todo->Tanggal <<left;
+					cout << "||" <<endl;
 				} else {
 					sisawaktu = to_string(abs(SisaHari)) + " hari telah terlewati";
-					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
+					cout << "||";
+					cout << setw(8) <<left << todo->Id;
+					cout << "||" << setw(15) << todo->Tugas <<left;
+					cout << "||" << setw(20) << todo->Prioritas <<left;
+					cout << "||" << setw(14) << todo->Status <<left;
+					cout << "||" << setw(40) << todo->Deadline <<left;
+					cout << "||" << setw(27) << sisawaktu <<left;
+					cout << "||" << setw(40) << todo->Tanggal <<left;
+					cout << "||" <<endl;
 				}
 			}
-			cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
 
 			cout << "Apakah Anda ingin mencari lagi? Y/T: ";
 			getline(cin, ulangicari);
@@ -690,12 +789,11 @@ void CariToDo(){
 		}
 
 		if (!mencocokkanTodos.empty()) {
-			cout << "Tugas dengan deadline " << DeadlineFormatted.str().c_str() << " ditemukan!" << endl;
-			cout << "*************************************************************************************************************************************************" << endl;
-			cout << "*                                   							Daftar Tugas                                       								  *" << endl;
-			cout << "**************************************************************************************************************************************************" << endl;
-			cout << setw(5) << "ID" << setw(15) << "Tugas" << setw(15) << "Prioritas" << setw(15) << "Status" << setw(30) << "Deadline" << setw(30) << "Tanggal Diubah" << endl;
-			cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+			cout << "____________________________________________________________________________________________________________________________________________________________________________________" << endl;
+			cout << "||                                                                          Daftar Tugas                               					                          ||" << endl;
+			cout << "||________________________________________________________________________________________________________________________________________________________________________________||" << endl;
+			cout << "||" <<setw(5) << "ID" <<setw(5) << "||"<<setw(10) << "Tugas" << setw(7) <<"||" <<setw(15) << "Prioritas" <<setw(7) <<"||" <<setw(10) << "Status" <<setw(6) <<"||" <<setw(24) << "Deadline" <<setw(18) <<"||" <<setw(19) << "Sisa Waktu" <<setw(10) <<"||" <<setw(26)<< "Tanggal Ubah" <<setw(16) <<"||"<< endl;
+			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
 
 			for (const Todo* todo : mencocokkanTodos) {
 
@@ -722,28 +820,51 @@ void CariToDo(){
 					int menit = SisaMenit % 60;
 
 					if (SisaJam == 0) {
-						sisawaktu = to_string(menit) + " menit menuju deadline";
+						sisawaktu = to_string(menit) + " menit";
 					} else {
 						if(jam < 0 && menit < 0 ){
-							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit telah terlewati";
+							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit";
 						} else {
-							sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit menuju deadline";
+							sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit";
 						}
 					}
-					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
+					cout << "||";
+					cout << setw(8) <<left << todo->Id;
+					cout << "||" << setw(15) << todo->Tugas <<left;
+					cout << "||" << setw(20) << todo->Prioritas <<left;
+					cout << "||" << setw(14) << todo->Status <<left;
+					cout << "||" << setw(40) << todo->Deadline <<left;
+					cout << "||" << setw(27) << sisawaktu <<left;
+					cout << "||" << setw(40) << todo->Tanggal <<left;
+					cout << "||" <<endl;
 				} else if (SisaHari > 0) {
 					SisaHari = SisaMenit / (60 * 24);
 					SisaJam = (SisaMenit % (60 * 24)) / 60;
 					SisaMenit = (SisaMenit % (60 * 24)) % 60;
 
-					sisawaktu = to_string(SisaHari) + " hari " + to_string(SisaJam) + " jam " + to_string(SisaMenit) + " menit menuju deadline";
-					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
+					sisawaktu = to_string(SisaHari) + " hari " + to_string(SisaJam) + " jam " + to_string(SisaMenit) + " menit";
+					cout << "||";
+					cout << setw(8) <<left << todo->Id;
+					cout << "||" << setw(15) << todo->Tugas <<left;
+					cout << "||" << setw(20) << todo->Prioritas <<left;
+					cout << "||" << setw(14) << todo->Status <<left;
+					cout << "||" << setw(40) << todo->Deadline <<left;
+					cout << "||" << setw(27) << sisawaktu <<left;
+					cout << "||" << setw(40) << todo->Tanggal <<left;
+					cout << "||" <<endl;
 				} else {
 					sisawaktu = to_string(abs(SisaHari)) + " hari telah terlewati";
-					cout << setw(5) << todo->Id << setw(10) << todo->Tugas << setw(30) << todo->Prioritas << setw(30) << todo->Status << setw(35) << todo->Deadline << setw(35) << sisawaktu << setw(35) << todo->Tanggal << endl;
-				}
+					cout << "||";
+					cout << setw(8) <<left << todo->Id;
+					cout << "||" << setw(15) << todo->Tugas <<left;
+					cout << "||" << setw(20) << todo->Prioritas <<left;
+					cout << "||" << setw(14) << todo->Status <<left;
+					cout << "||" << setw(40) << todo->Deadline <<left;
+					cout << "||" << setw(27) << sisawaktu <<left;
+					cout << "||" << setw(40) << todo->Tanggal <<left;
+					cout << "||" <<endl;
 			}
-			cout << "--------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
 
 			cout << "Apakah Anda ingin mencari lagi? Y/T: ";
 			getline(cin, ulangicari);
@@ -756,6 +877,7 @@ void CariToDo(){
 				cout << "Input salah!" << endl;
 				return;
 			}
+			}
 		} else {
 			cout << "Tugas dengan deadline " <<  DeadlineFormatted.str().c_str() << " tidak ditemukan!" << endl;
 			return;
@@ -765,17 +887,20 @@ void CariToDo(){
 		return;
 	}
 }
-
 int main() {
 	int pilihan, id;
 	do {
-		cout << "(1) Tambah Tugas" << endl;
-		cout << "(2) Lihat Tugas" << endl;
-		cout << "(3) Edit Tugas" << endl;
-		cout << "(4) Hapus Tugas" << endl;
-		cout << "(5) Cari Tugas" << endl;
-		cout << "(6) Keluar" << endl;
-		cout << "Enter your choice: ";
+		cout << "_____________________________" << endl;
+		cout << "||" <<setw(17) <<"MAIN MENU" <<setw(10) << "||" <<endl;
+		cout << "||_________________________||" << endl;
+		cout << "|| (1) Tambah Tugas" <<setw(10) <<"||" << endl;
+		cout << "|| (2) Lihat Tugas" <<setw(11) <<"||" << endl;
+		cout << "|| (3) Edit Tugas" <<setw(12) <<"||" << endl;
+		cout << "|| (4) Hapus Tugas" <<setw(11)<<"||"  << endl;
+		cout << "|| (5) Cari Tugas" <<setw(12)<<"||"  << endl;
+		cout << "|| (6) Keluar" <<setw(16)<<"||"  << endl;
+		cout << "||_________________________||" << endl;
+		cout << "  Enter your choice: ";
 		cin >> pilihan;
 		switch (pilihan) {
 			case 1:
