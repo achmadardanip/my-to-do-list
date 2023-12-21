@@ -470,7 +470,7 @@ void CariToDo(){
 		while (it != todos + numTugas) {
 			mencocokkanTodos.push_back(&(*it));
 			it = find_if(it + 1, todos + numTugas, [=](const Todo& todo) {
-				return ConvertToLowercase(todo.Status) == ConvertToLowercase(Status);
+				return ConvertToLowercase(todo.Tugas) == ConvertToLowercase(Tugas);
 			});
 		}
 
@@ -590,7 +590,7 @@ void CariToDo(){
 		while (it != todos + numTugas) {
 			mencocokkanTodos.push_back(&(*it));
 			it = find_if(it + 1, todos + numTugas, [=](const Todo& todo) {
-				return ConvertToLowercase(todo.Status) == ConvertToLowercase(Status);
+				return ConvertToLowercase(todo.Prioritas) == ConvertToLowercase(Prioritas);
 			});
 		}
 
@@ -677,6 +677,7 @@ void CariToDo(){
 					cout << "||" << setw(27) << sisawaktu <<left;
 					cout << "||" << setw(40) << todo->Tanggal <<left;
 					cout << "||" <<endl;
+				}
 			}
 
 			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
@@ -692,14 +693,14 @@ void CariToDo(){
 				cout << " Input salah!" << endl;
 				return;
 			}
-			} 
-			}
-			else {
-				cout << " Tugas dengan prioritas " << Prioritas << " tidak ditemukan!" << endl;
+		}
+		else {
+			cout << " Tugas dengan prioritas " << Prioritas << " tidak ditemukan!" << endl;
 			return;
-			}
-			} 
-		else if(pilihanpencarian == 4){
+		}
+			
+	} 
+	else if(pilihanpencarian == 4){
 		cout << " Masukkan status tugas yang ingin dicari: ";
 		cin.ignore();
 		getline(cin, Status);
@@ -938,6 +939,7 @@ void CariToDo(){
 					cout << "||" << setw(27) << sisawaktu <<left;
 					cout << "||" << setw(40) << todo->Tanggal <<left;
 					cout << "||" <<endl;
+				}
 			}
 			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
 
@@ -952,7 +954,6 @@ void CariToDo(){
 				cout << " Input salah!" << endl;
 				return;
 			}
-			}
 		} else {
 			cout << " Tugas dengan deadline " <<  DeadlineFormatted.str().c_str() << " tidak ditemukan!" << endl;
 			return;
@@ -962,6 +963,7 @@ void CariToDo(){
 		return;
 	}
 }
+
 int main() {
 	int pilihan, id;
 	do {
