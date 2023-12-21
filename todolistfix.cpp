@@ -7,6 +7,7 @@
 #include <chrono>
 #include <sstream>
 #include <iomanip>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -142,10 +143,10 @@ void EditTugas(int id){
 		cout << "______________________________" << endl;
 		cout << "|| Apa yang ingin Anda edit? ||"<< endl;
 		cout << "||___________________________||" << endl;
-		cout << "|| (1) Edit tugas" <<setw(14)<<"||"<< endl;
-		cout << "|| (2) Edit prioritas" <<setw(10) <<"||" << endl;
-		cout << "|| (3) Edit status" <<setw(13) <<"||" << endl;
-		cout << "|| (4) Edit deadline" <<setw(11) <<"||" << endl;
+		cout << "|| (1) Edit tugas            ||"<< endl;
+		cout << "|| (2) Edit prioritas        ||" << endl;
+		cout << "|| (3) Edit status           ||" << endl;
+		cout << "|| (4) Edit deadline         ||" << endl;
 		cout << "||___________________________||" << endl;
 
 
@@ -310,18 +311,18 @@ void CariToDo(){
 	cout << "___________________________________________" << endl;
 	cout << "||    Ingin mencari berdasarkan apa?     ||" << endl;
 	cout << "||_______________________________________||" << endl;
-	cout << "|| (1) Pencarian Berdasarkan ID" << endl;
-	cout << "|| (2) Pencarian Berdasarkan nama tugas" << endl;
-	cout << "|| (3) Pencarian Berdasarkan prioritas" << endl;
-	cout << "|| (4) Pencarian Berdasarkan status" << endl;
-	cout << "|| (5) Pencarian Berdasarkan deadline" << endl;
+	cout << "|| (1) Pencarian Berdasarkan ID          ||" << endl;
+	cout << "|| (2) Pencarian Berdasarkan nama tugas  ||" << endl;
+	cout << "|| (3) Pencarian Berdasarkan prioritas   ||" << endl;
+	cout << "|| (4) Pencarian Berdasarkan status      ||" << endl;
+	cout << "|| (5) Pencarian Berdasarkan deadline    ||" << endl;
 	cout << "||_______________________________________||" << endl;
 
 	do {
 	    cout << " Masukkan pilihan pencarian: ";
 	    cin >> pilihanpencarian;
 	    if (cin.fail()) {
-	        cout << "Input salah. Harap masukkan angka!" << endl;
+	        cout << " Input salah. Harap masukkan angka!" << endl;
 	        cin.clear();
 	        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	    } else {
@@ -332,10 +333,10 @@ void CariToDo(){
 	if(pilihanpencarian == 1){
 		int id;		
 		do {
-		    cout << "Masukkan ID tugas yang ingin dicari: ";
+		    cout << " Masukkan ID tugas yang ingin dicari: ";
 		    cin >> id;
 		    if (cin.fail()) {
-		        cout << "Input salah. Harap masukkan angka!" << endl;
+		        cout << " Input salah. Harap masukkan angka!" << endl;
 		        cin.clear();
 		        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		    } else {
@@ -360,7 +361,7 @@ void CariToDo(){
 			cout << "____________________________________________________________________________________________________________________________________________________________________________________" << endl;
 			cout << "||                                                                          Daftar Tugas                               					                          ||" << endl;
 			cout << "||________________________________________________________________________________________________________________________________________________________________________________||" << endl;
-			cout << "||" <<setw(5) << "ID" <<setw(5) << "||"<<setw(10) << "Tugas" << setw(7) <<"||" <<setw(15) << "Prioritas" <<setw(7) <<"||" <<setw(10) << "Status" <<setw(6) <<"||" <<setw(24) << "Deadline" <<setw(18) <<"||" <<setw(19) << "Sisa Waktu" <<setw(10) <<"||" <<setw(26)<< "Tanggal Ubah" <<setw(16) <<"||"<< endl;
+			cout << "||   " << "ID" <<setw(5) << "||"<<setw(10) << "Tugas" << setw(7) <<"||" <<setw(15) << "Prioritas" <<setw(7) <<"||" <<setw(10) << "Status" <<setw(6) <<"||" <<setw(24) << "Deadline" <<setw(18) <<"||" <<setw(19) << "Sisa Waktu" <<setw(10) <<"||" <<setw(26)<< "Tanggal Ubah" <<setw(16) <<"||"<< endl;
 			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
 
 			for (const Todo* todo : mencocokkanTodos) {
@@ -435,11 +436,11 @@ void CariToDo(){
 			}
 			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
 		} else {
-			cout << "Tugas dengan ID " << id << " tidak ditemukan!" << endl;
+			cout << " Tugas dengan ID " << id << " tidak ditemukan!" << endl;
 			return;
 		}
 	} else if(pilihanpencarian == 2){
-		cout << "Masukkan nama tugas yang ingin dicari: ";
+		cout << " Masukkan nama tugas yang ingin dicari: ";
 		cin.ignore();
 		getline(cin, Tugas);
 
@@ -460,7 +461,7 @@ void CariToDo(){
 			cout << "____________________________________________________________________________________________________________________________________________________________________________________" << endl;
 			cout << "||                                                                          Daftar Tugas                               					                          ||" << endl;
 			cout << "||________________________________________________________________________________________________________________________________________________________________________________||" << endl;
-			cout << "||" <<setw(5) << "ID" <<setw(5) << "||"<<setw(10) << "Tugas" << setw(7) <<"||" <<setw(15) << "Prioritas" <<setw(7) <<"||" <<setw(10) << "Status" <<setw(6) <<"||" <<setw(24) << "Deadline" <<setw(18) <<"||" <<setw(19) << "Sisa Waktu" <<setw(10) <<"||" <<setw(26)<< "Tanggal Ubah" <<setw(16) <<"||"<< endl;
+			cout << "||   " << "ID" <<setw(5) << "||"<<setw(10) << "Tugas" << setw(7) <<"||" <<setw(15) << "Prioritas" <<setw(7) <<"||" <<setw(10) << "Status" <<setw(6) <<"||" <<setw(24) << "Deadline" <<setw(18) <<"||" <<setw(19) << "Sisa Waktu" <<setw(10) <<"||" <<setw(26)<< "Tanggal Ubah" <<setw(16) <<"||"<< endl;
 			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
 
 			for (const Todo* todo : mencocokkanTodos) {
@@ -535,7 +536,7 @@ void CariToDo(){
 			}
 			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
 
-			cout << "Apakah Anda ingin mencari lagi? Y/T: ";
+			cout << " Apakah Anda ingin mencari lagi? Y/T: ";
 			getline(cin, ulangicari);
 
 			if (ulangicari == "Y" || ulangicari == "y") {
@@ -543,15 +544,15 @@ void CariToDo(){
 			} else if (ulangicari == "T" || ulangicari == "t") {
 				return;
 			} else {
-				cout << "Input salah!" << endl;
+				cout << " Input salah!" << endl;
 				return;
 			}
 		} else {
-			cout << "Tugas dengan nama " << Tugas << " tidak ditemukan!" << endl;
+			cout << " Tugas dengan nama " << Tugas << " tidak ditemukan!" << endl;
 			return;
 		}
 	} else if(pilihanpencarian == 3){
-		cout << "Masukkan prioritas tugas yang ingin dicari: ";
+		cout << " Masukkan prioritas tugas yang ingin dicari: ";
 		cin.ignore();
 		getline(cin, Prioritas);
 
@@ -572,7 +573,7 @@ void CariToDo(){
 			cout << "____________________________________________________________________________________________________________________________________________________________________________________" << endl;
 			cout << "||                                                                          Daftar Tugas                               					                          ||" << endl;
 			cout << "||________________________________________________________________________________________________________________________________________________________________________________||" << endl;
-			cout << "||" <<setw(5) << "ID" <<setw(5) << "||"<<setw(10) << "Tugas" << setw(7) <<"||" <<setw(15) << "Prioritas" <<setw(7) <<"||" <<setw(10) << "Status" <<setw(6) <<"||" <<setw(24) << "Deadline" <<setw(18) <<"||" <<setw(19) << "Sisa Waktu" <<setw(10) <<"||" <<setw(26)<< "Tanggal Ubah" <<setw(16) <<"||"<< endl;
+			cout << "||   " << "ID" <<setw(5) << "||"<<setw(10) << "Tugas" << setw(7) <<"||" <<setw(15) << "Prioritas" <<setw(7) <<"||" <<setw(10) << "Status" <<setw(6) <<"||" <<setw(24) << "Deadline" <<setw(18) <<"||" <<setw(19) << "Sisa Waktu" <<setw(10) <<"||" <<setw(26)<< "Tanggal Ubah" <<setw(16) <<"||"<< endl;
 			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
 
 			for (const Todo* todo : mencocokkanTodos) {
@@ -647,7 +648,7 @@ void CariToDo(){
 
 			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
 			
-			cout << "Apakah Anda ingin mencari lagi? Y/T: ";
+			cout << " Apakah Anda ingin mencari lagi? Y/T: ";
 			getline(cin, ulangicari);
 			
 			if (ulangicari == "Y" || ulangicari == "y") {
@@ -655,18 +656,18 @@ void CariToDo(){
 			} else if (ulangicari == "T" || ulangicari == "t") {
 				return;
 			} else {
-				cout << "Input salah!" << endl;
+				cout << " Input salah!" << endl;
 				return;
 			}
 			} 
 			}
 			else {
-				cout << "Tugas dengan prioritas " << Prioritas << " tidak ditemukan!" << endl;
+				cout << " Tugas dengan prioritas " << Prioritas << " tidak ditemukan!" << endl;
 			return;
 			}
 			} 
 		else if(pilihanpencarian == 4){
-		cout << "Masukkan status tugas yang ingin dicari: ";
+		cout << " Masukkan status tugas yang ingin dicari: ";
 		cin.ignore();
 		getline(cin, Status);
 
@@ -687,7 +688,7 @@ void CariToDo(){
 			cout << "____________________________________________________________________________________________________________________________________________________________________________________" << endl;
 			cout << "||                                                                          Daftar Tugas                               					                          ||" << endl;
 			cout << "||________________________________________________________________________________________________________________________________________________________________________________||" << endl;
-			cout << "||" <<setw(5) << "ID" <<setw(5) << "||"<<setw(10) << "Tugas" << setw(7) <<"||" <<setw(15) << "Prioritas" <<setw(7) <<"||" <<setw(10) << "Status" <<setw(6) <<"||" <<setw(24) << "Deadline" <<setw(18) <<"||" <<setw(19) << "Sisa Waktu" <<setw(10) <<"||" <<setw(26)<< "Tanggal Ubah" <<setw(16) <<"||"<< endl;
+			cout << "||   " << "ID" <<setw(5) << "||"<<setw(10) << "Tugas" << setw(7) <<"||" <<setw(15) << "Prioritas" <<setw(7) <<"||" <<setw(10) << "Status" <<setw(6) <<"||" <<setw(24) << "Deadline" <<setw(18) <<"||" <<setw(19) << "Sisa Waktu" <<setw(10) <<"||" <<setw(26)<< "Tanggal Ubah" <<setw(16) <<"||"<< endl;
 			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
 
 			for (const Todo* todo : mencocokkanTodos) {
@@ -762,7 +763,7 @@ void CariToDo(){
 			}
 			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
 
-			cout << "Apakah Anda ingin mencari lagi? Y/T: ";
+			cout << " Apakah Anda ingin mencari lagi? Y/T: ";
 			getline(cin, ulangicari);
 
 			if (ulangicari == "Y" || ulangicari == "y") {
@@ -770,15 +771,15 @@ void CariToDo(){
 			} else if (ulangicari == "T" || ulangicari == "t") {
 				return;
 			} else {
-				cout << "Input salah!" << endl;
+				cout << " Input salah!" << endl;
 				return;
 			}
 		} else {
-			cout << "Tugas dengan status " << Status << " tidak ditemukan!" << endl;
+			cout << " Tugas dengan status " << Status << " tidak ditemukan!" << endl;
 			return;
 		}
 	} else if(pilihanpencarian == 5){
-		cout << "Masukkan deadline yang ingin dicari (DD/MM/YYYY HH:MM): ";
+		cout << " Masukkan deadline yang ingin dicari (DD/MM/YYYY HH:MM): ";
 		cin.ignore();
 		getline(cin, Deadline);
 
@@ -787,7 +788,7 @@ void CariToDo(){
 		ss >> get_time(&DateTime, "%d/%m/%Y %H:%M");
 
 		while (ss.fail()) {
-			cout << "Ada kesalahan input tanggal. Silakan masukkan kembali deadline (DD/MM/YYYY HH:MM): ";
+			cout << " Ada kesalahan input tanggal. Silakan masukkan kembali deadline (DD/MM/YYYY HH:MM): ";
 			getline(cin, Deadline);
 			ss.clear();
 			ss.str(Deadline);
@@ -817,7 +818,7 @@ void CariToDo(){
 			cout << "____________________________________________________________________________________________________________________________________________________________________________________" << endl;
 			cout << "||                                                                          Daftar Tugas                               					                          ||" << endl;
 			cout << "||________________________________________________________________________________________________________________________________________________________________________________||" << endl;
-			cout << "||" <<setw(5) << "ID" <<setw(5) << "||"<<setw(10) << "Tugas" << setw(7) <<"||" <<setw(15) << "Prioritas" <<setw(7) <<"||" <<setw(10) << "Status" <<setw(6) <<"||" <<setw(24) << "Deadline" <<setw(18) <<"||" <<setw(19) << "Sisa Waktu" <<setw(10) <<"||" <<setw(26)<< "Tanggal Ubah" <<setw(16) <<"||"<< endl;
+			cout << "||   " << "ID" <<setw(5) << "||"<<setw(10) << "Tugas" << setw(7) <<"||" <<setw(15) << "Prioritas" <<setw(7) <<"||" <<setw(10) << "Status" <<setw(6) <<"||" <<setw(24) << "Deadline" <<setw(18) <<"||" <<setw(19) << "Sisa Waktu" <<setw(10) <<"||" <<setw(26)<< "Tanggal Ubah" <<setw(16) <<"||"<< endl;
 			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
 
 			for (const Todo* todo : mencocokkanTodos) {
@@ -891,7 +892,7 @@ void CariToDo(){
 			}
 			cout << "||________||_______________||____________________||______________||________________________________________||___________________________||________________________________________||" << endl;
 
-			cout << "Apakah Anda ingin mencari lagi? Y/T: ";
+			cout << " Apakah Anda ingin mencari lagi? Y/T: ";
 			getline(cin, ulangicari);
 			
 			if (ulangicari == "Y" || ulangicari == "y") {
@@ -899,16 +900,16 @@ void CariToDo(){
 			} else if (ulangicari == "T" || ulangicari == "t") {
 				return;
 			} else {
-				cout << "Input salah!" << endl;
+				cout << " Input salah!" << endl;
 				return;
 			}
 			}
 		} else {
-			cout << "Tugas dengan deadline " <<  DeadlineFormatted.str().c_str() << " tidak ditemukan!" << endl;
+			cout << " Tugas dengan deadline " <<  DeadlineFormatted.str().c_str() << " tidak ditemukan!" << endl;
 			return;
 		}
 	} else {
-		cout << "Input salah!" << endl;
+		cout << " Input salah!" << endl;
 		return;
 	}
 }
@@ -916,14 +917,14 @@ int main() {
 	int pilihan, id;
 	do {
 		cout << "_____________________________" << endl;
-		cout << "||" <<setw(17) <<"MAIN MENU" <<setw(10) << "||" <<endl;
+		cout << "||        MAIN MENU        ||" <<endl;
 		cout << "||_________________________||" << endl;
-		cout << "|| (1) Tambah Tugas" <<setw(10) <<"||" << endl;
-		cout << "|| (2) Lihat Tugas" <<setw(11) <<"||" << endl;
-		cout << "|| (3) Edit Tugas" <<setw(12) <<"||" << endl;
-		cout << "|| (4) Hapus Tugas" <<setw(11)<<"||"  << endl;
-		cout << "|| (5) Cari Tugas" <<setw(12)<<"||"  << endl;
-		cout << "|| (6) Keluar" <<setw(16)<<"||"  << endl;
+		cout << "|| (1) Tambah Tugas        ||" << endl;
+		cout << "|| (2) Lihat Tugas         ||" << endl;
+		cout << "|| (3) Edit Tugas          ||" << endl;
+		cout << "|| (4) Hapus Tugas         ||"  << endl;
+		cout << "|| (5) Cari Tugas          ||"  << endl;
+		cout << "|| (6) Keluar              ||"  << endl;
 		cout << "||_________________________||" << endl;
 		cout << "  Enter your choice: ";
 		cin >> pilihan;
@@ -936,10 +937,10 @@ int main() {
 				break;
 			case 3:
 				do {
-				    cout << "Masukkan ID tugas yang ingin diedit: ";
+				    cout << " Masukkan ID tugas yang ingin diedit: ";
 				    cin >> id;
 				    if (cin.fail()) {
-				        cout << "Input salah. Harap masukkan angka!" << endl;
+				        cout << " Input salah. Harap masukkan angka!" << endl;
 				        cin.clear();
 				        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 				    } else {
@@ -950,10 +951,10 @@ int main() {
 				break;
 			case 4:
 				do {
-				    cout << "Masukkan ID tugas yang ingin dihapus: ";
+				    cout << " Masukkan ID tugas yang ingin dihapus: ";
 				    cin >> id;
 				    if (cin.fail()) {
-				        cout << "Input salah. Harap masukkan angka!" << endl;
+				        cout << " Input salah. Harap masukkan angka!" << endl;
 				        cin.clear();
 				        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 				    } else {
@@ -966,10 +967,10 @@ int main() {
 				CariToDo();
 				break;
 			case 6:
-				cout << "Anda telah keluar dari aplikasi";
+				cout << " Anda telah keluar dari aplikasi";
 				return 0;
 			default:
-				cout << "Invalid choice! Please try again." << endl;
+				cout << " Invalid choice! Please try again." << endl;
 				break;
 		}
 		cout << endl;
