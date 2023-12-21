@@ -120,9 +120,11 @@ void HapusToDo(int id) {
 			todos[it - todos] = todos[numTugas - 1];
 			numTugas--;
 			cout << "Tugas dengan ID " << id << " berhasil dihapus!" << endl;
-		} else if(pilihanhapus == "T" || pilihanhapus == "t"){
+		} 
+		else if(pilihanhapus == "T" || pilihanhapus == "t"){
 			return ;
-		} else {
+		}
+		else {
 			return ;
 		}
 	} else {
@@ -963,16 +965,21 @@ void CariToDo(){
 int main() {
 	int pilihan, id;
 	do {
-		cout << "_____________________________" << endl;
-		cout << "||        MAIN MENU        ||" <<endl;
-		cout << "||_________________________||" << endl;
-		cout << "|| (1) Tambah Tugas        ||" << endl;
-		cout << "|| (2) Lihat Tugas         ||" << endl;
-		cout << "|| (3) Edit Tugas          ||" << endl;
-		cout << "|| (4) Hapus Tugas         ||"  << endl;
-		cout << "|| (5) Cari Tugas          ||"  << endl;
-		cout << "|| (6) Keluar              ||"  << endl;
-		cout << "||_________________________||" << endl;
+		cout << "      //---------------\\\\" <<endl;
+		cout << "     //__/___/___/___/__\\\\" <<endl;
+		cout << "   _//___/___/___/___/___\\\\_" <<endl;
+		cout << "  _||   SELAMAT DATANG    ||_ " <<endl;
+		cout << " _|| DI APLIKASI TODO LIST ||_" <<endl;
+		cout << "_||========||_____||========||_" << endl;
+		cout << "||   <$>   MAIN MENU   <$>   ||" <<endl;
+		cout << "||_________||-----||_________||" << endl;
+		cout << "|| (1) Tambah Tugas          ||" << endl;
+		cout << "|| (2) Lihat Tugas           ||" << endl;
+		cout << "|| (3) Edit Tugas            ||" << endl;
+		cout << "|| (4) Hapus Tugas           ||"  << endl;
+		cout << "|| (5) Cari Tugas            ||"  << endl;
+		cout << "|| (6) Keluar                ||"  << endl;
+		cout << "||___________________________||" << endl;
 		cout << "  Enter your choice: ";
 		cin >> pilihan;
 		switch (pilihan) {
@@ -1021,5 +1028,5 @@ int main() {
 				break;
 		}
 		cout << endl;
-	} while (pilihan != 4);
+	} while (pilihan != 6);
 }
