@@ -45,7 +45,7 @@ string Deadline, Tugas, Prioritas, Status, ulangi, ulangicari;
 
 void TambahToDo() {
 	if (numTugas >= MAX_TASKS) {
-		cout << "Tidak dapat menambah tugas" << endl;
+		cout << "Tidak dapat menambah tugas sudah mencapai limit 100 tugas. Silakan hapus salah satu tugas lalu tambah lagi!" << endl;
 		return;
 	}
 
@@ -89,7 +89,7 @@ void TambahToDo() {
 
 	todos[numTugas++] = todo;
 
-	cout << "Task added successfully!" << endl;
+	cout << "Tugas berhasil ditambahkan!" << endl;
 
 	cout << "Apakah Anda ingin menambah tugas baru lagi? Y/T: ";
     getline(cin, ulangi);
@@ -971,7 +971,7 @@ int main() {
 		cout << "     //__/___/___/___/__\\\\" <<endl;
 		cout << "   _//___/___/___/___/___\\\\_" <<endl;
 		cout << "  _||   SELAMAT DATANG    ||_ " <<endl;
-		cout << " _|| DI APLIKASI TODO LIST ||_" <<endl;
+		cout << " _|| DI APLIKASI TO DO LIST ||_" <<endl;
 		cout << "_||========||_____||========||_" << endl;
 		cout << "||   <$>   MAIN MENU   <$>   ||" <<endl;
 		cout << "||_________||-----||_________||" << endl;
@@ -982,7 +982,7 @@ int main() {
 		cout << "|| (5) Cari Tugas            ||"  << endl;
 		cout << "|| (6) Keluar                ||"  << endl;
 		cout << "||___________________________||" << endl;
-		cout << "  Enter your choice: ";
+		cout << "  Masukkan Pilihan: ";
 		cin >> pilihan;
 		switch (pilihan) {
 			case 1:
@@ -1026,7 +1026,7 @@ int main() {
 				cout << " Anda telah keluar dari aplikasi";
 				return 0;
 			default:
-				cout << " Invalid choice! Please try again." << endl;
+				cout << " Pilihan salah! Silakan coba lagi." << endl;
 				break;
 		}
 		cout << endl;
