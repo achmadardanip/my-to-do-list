@@ -984,6 +984,15 @@ int main() {
 		cout << "||___________________________||" << endl;
 		cout << "  Masukkan Pilihan: ";
 		cin >> pilihan;
+		do {
+		    if (cin.fail()) {
+		        cout << " Input salah. Harap masukkan angka!" << endl;
+		        cin.clear();
+		        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		    } else {
+		        break;
+		    }
+		} while (true);
 		switch (pilihan) {
 			case 1:
 				TambahToDo();
