@@ -78,7 +78,7 @@ void TambahToDo() {
 	}
 
 	time_t waktu = mktime(&DateTime);
-	chrono::system_clock::time_point timePoint = chrono::system_clock::from_time_t(waktu);
+	// chrono::system_clock::time_point timePoint = chrono::system_clock::from_time_t(waktu);
 
 	stringstream DeadlineFormatted;
 	DeadlineFormatted << put_time(&DateTime, "%A, %d %B %Y - %H:%M");
@@ -193,7 +193,7 @@ void EditTugas(int id){
 			}
 
 			time_t waktu = mktime(&DateTime);
-			chrono::system_clock::time_point timePoint = chrono::system_clock::from_time_t(waktu);
+			// chrono::system_clock::time_point timePoint = chrono::system_clock::from_time_t(waktu);
 
 			stringstream DeadlineFormatted;
 			DeadlineFormatted << put_time(&DateTime, "%A, %d %B %Y - %H:%M");
@@ -265,10 +265,14 @@ void LihatToDo() {
 			int menit = SisaMenit % 60;
 
 			if (SisaJam == 0) {
-				sisawaktu = to_string(menit) + " menit";
+				if(menit < 0){
+					sisawaktu = to_string(abs(menit)) + " menit terlewati";
+				} else {
+					sisawaktu = to_string(menit) + " menit";
+				}
 			} else {
 				if(jam < 0 && menit < 0 ){
-					sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit";
+					sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit terlewati";
 				} else {
 					sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit";
 				}
@@ -299,7 +303,7 @@ void LihatToDo() {
 			cout << "||" <<endl;
 		
 		} else {
-			sisawaktu = to_string(abs(SisaHari)) + " hari telah terlewati";
+			sisawaktu = to_string(abs(SisaHari)) + " hari terlewati";
 			cout << "||";
 			cout << setw(8) <<left << todo.Id;
 			cout << "||" << setw(15) << todo.Tugas <<left;
@@ -406,10 +410,14 @@ void CariToDo(){
 					int menit = SisaMenit % 60;
 
 					if (SisaJam == 0) {
-						sisawaktu = to_string(menit) + " menit";
+						if(menit < 0){
+							sisawaktu = to_string(abs(menit)) + " menit terlewati";
+						} else {
+							sisawaktu = to_string(menit) + " menit";
+						}
 					} else {
 						if(jam < 0 && menit < 0 ){
-							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit";
+							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit terlewati";
 						} else {
 							sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit";
 						}
@@ -439,7 +447,7 @@ void CariToDo(){
 					cout << "||" << setw(40) << todo->Tanggal <<left;
 					cout << "||" <<endl;
 				} else {
-					sisawaktu = to_string(abs(SisaHari)) + " hari telah terlewati";
+					sisawaktu = to_string(abs(SisaHari)) + " hari terlewati";
 					cout << "||";
 					cout << setw(8) <<left << todo->Id;
 					cout << "||" << setw(15) << todo->Tugas <<left;
@@ -513,10 +521,14 @@ void CariToDo(){
 					int menit = SisaMenit % 60;
 
 					if (SisaJam == 0) {
-						sisawaktu = to_string(menit) + " menit";
+						if(menit < 0){
+							sisawaktu = to_string(abs(menit)) + " menit terlewati";
+						} else {
+							sisawaktu = to_string(menit) + " menit";
+						}
 					} else {
 						if(jam < 0 && menit < 0 ){
-							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit";
+							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit terlewati";
 						} else {
 							sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit";
 						}
@@ -536,7 +548,7 @@ void CariToDo(){
 					SisaMenit = (SisaMenit % (60 * 24)) % 60;
 
 					sisawaktu = to_string(SisaHari) + " hari " + to_string(SisaJam) + " jam " + to_string(SisaMenit) + " menit";
-					sisawaktu = to_string(abs(SisaHari)) + " hari telah terlewati";
+					sisawaktu = to_string(abs(SisaHari)) + " hari terlewati";
 					cout << "||";
 					cout << setw(8) <<left << todo->Id;
 					cout << "||" << setw(15) << todo->Tugas <<left;
@@ -547,7 +559,7 @@ void CariToDo(){
 					cout << "||" << setw(40) << todo->Tanggal <<left;
 					cout << "||" <<endl;
 				} else {
-					sisawaktu = to_string(abs(SisaHari)) + " hari telah terlewati";
+					sisawaktu = to_string(abs(SisaHari)) + " hari terlewati";
 					cout << "||";
 					cout << setw(8) <<left << todo->Id;
 					cout << "||" << setw(15) << todo->Tugas <<left;
@@ -634,10 +646,14 @@ void CariToDo(){
 					int menit = SisaMenit % 60;
 
 					if (SisaJam == 0) {
-						sisawaktu = to_string(menit) + " menit";
+						if(menit < 0){
+							sisawaktu = to_string(abs(menit)) + " menit terlewati";
+						} else {
+							sisawaktu = to_string(menit) + " menit";
+						}
 					} else {
 						if(jam < 0 && menit < 0 ){
-							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit telah terlewati";
+							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit terlewati";
 						} else {
 							sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit";
 						}
@@ -667,7 +683,7 @@ void CariToDo(){
 					cout << "||" << setw(40) << todo->Tanggal <<left;
 					cout << "||" <<endl;
 				} else {
-					sisawaktu = to_string(abs(SisaHari)) + " hari telah terlewati";
+					sisawaktu = to_string(abs(SisaHari)) + " hari terlewati";
 					cout << "||";
 					cout << setw(8) <<left << todo->Id;
 					cout << "||" << setw(15) << todo->Tugas <<left;
@@ -758,10 +774,14 @@ void CariToDo(){
 					int menit = SisaMenit % 60;
 
 					if (SisaJam == 0) {
-						sisawaktu = to_string(menit) + " menit";
+						if(menit < 0){
+							sisawaktu = to_string(abs(menit)) + " menit terlewati";
+						} else {
+							sisawaktu = to_string(menit) + " menit";
+						}
 					} else {
 						if(jam < 0 && menit < 0 ){
-							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit";
+							sisawaktu = to_string(abs(jam)) + " jam " + to_string(abs(menit)) + " menit terlewati";
 						} else {
 							sisawaktu = to_string(jam) + " jam " + to_string(menit) + " menit";
 						}
@@ -791,7 +811,7 @@ void CariToDo(){
 					cout << "||" << setw(40) << todo->Tanggal <<left;
 					cout << "||" <<endl;
 				} else {
-					sisawaktu = to_string(abs(SisaHari)) + " hari telah terlewati";
+					sisawaktu = to_string(abs(SisaHari)) + " hari terlewati";
 					cout << "||";
 					cout << setw(8) <<left << todo->Id;
 					cout << "||" << setw(15) << todo->Tugas <<left;
@@ -838,7 +858,7 @@ void CariToDo(){
 		}
 
 		time_t waktu = mktime(&DateTime);
-		chrono::system_clock::time_point timePoint = chrono::system_clock::from_time_t(waktu);
+		// chrono::system_clock::time_point timePoint = chrono::system_clock::from_time_t(waktu);
 		stringstream DeadlineFormatted;
 		DeadlineFormatted << put_time(&DateTime, "%A, %d %B %Y - %H:%M");
 		string LowercaseDeadline = ConvertToLowercase(DeadlineFormatted.str().c_str());
@@ -929,7 +949,7 @@ void CariToDo(){
 					cout << "||" << setw(40) << todo->Tanggal <<left;
 					cout << "||" <<endl;
 				} else {
-					sisawaktu = to_string(abs(SisaHari)) + " hari telah terlewati";
+					sisawaktu = to_string(abs(SisaHari)) + " hari terlewati";
 					cout << "||";
 					cout << setw(8) <<left << todo->Id;
 					cout << "||" << setw(15) << todo->Tugas <<left;
